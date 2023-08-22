@@ -1,0 +1,25 @@
+{
+	"connectorDetails": {
+		"name": "pubsub",
+		"provider": "gcp",
+		"version": 1
+	},
+	"configVariables": [
+		{
+			"key": "topic_id",
+			"stringValue": "mae-test"
+		},
+		{
+			"key": "project_id",
+			"stringValue": "$PROJECT_ID$"
+		}
+	],
+	"authConfig": {},
+	"logConfig": {},
+	"sslConfig": {
+		"privateServerCertificate": {},
+		"clientCertificate": {},
+		"clientPrivateKey": {},
+		"clientPrivateKeyPass": {}
+	}
+}
