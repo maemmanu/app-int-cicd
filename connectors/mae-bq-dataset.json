@@ -1,17 +1,20 @@
 {
 	"connectorDetails": {
-		"name": "pubsub",
+		"name": "bigquery",
 		"provider": "gcp",
 		"version": 1
 	},
 	"configVariables": [
 		{
-			"key": "topic_id",
-			"stringValue": "mae-test"
+			"key": "project_id",
+			"stringValue": "bap-emea-apigee-5"
 		},
 		{
-			"key": "project_id",
-			"stringValue": "$PROJECT_ID$"
+			"key": "dataset_id",
+			"stringValue": "me_dataset"
+		},
+		{
+			"key": "proxy_enabled"
 		}
 	],
 	"authConfig": {},
