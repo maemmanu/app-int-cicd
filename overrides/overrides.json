@@ -2,12 +2,24 @@
 	"task_overrides": [
 		{
 			"task": "GenericRestV2Task",
-			"taskId": "3",
+			"taskId": "16",
 			"parameters": {
 				"url": {
 					"key": "url",
 					"value": {
-						"stringValue": "https://httpbin.org/get"
+						"stringValue": "$MessageURL$"
+					}
+				}
+			}
+		},
+		{
+			"task": "GenericRestV2Task",
+			"taskId": "17",
+			"parameters": {
+				"url": {
+					"key": "url",
+					"value": {
+						"stringValue": "$NotificationURL$"
 					}
 				}
 			}
@@ -15,18 +27,45 @@
 	],
 	"connection_overrides": [
 		{
-			"taskId": "2",
+			"taskId": "7",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-pubsub"
+				"connectionName": "mae-bq-dataset"
+			}
+		},
+		{
+			"taskId": "23",
+			"task": "GenericConnectorTask",
+			"parameters": {
+				"connectionName": "mae-bq-dataset"
+			}
+		},
+		{
+			"taskId": "20",
+			"task": "GenericConnectorTask",
+			"parameters": {
+				"connectionName": "mae-bq-dataset"
+			}
+		},
+		{
+			"taskId": "13",
+			"task": "GenericConnectorTask",
+			"parameters": {
+				"connectionName": "mae-bq-dataset"
 			}
 		}
 	],
 	"param_overrides": [
 		{
+			"key": "_version",
+			"defaultValue": {
+				"stringValue": "1"
+			}
+		},
+		{
 			"key": "_env",
 			"defaultValue": {
-				"stringValue": "development"
+				"stringValue": "dev"
 			}
 		}
 	]
