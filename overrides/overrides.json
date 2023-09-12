@@ -59,7 +59,7 @@
 		{
 			"key": "_version",
 			"defaultValue": {
-				"stringValue": "1"
+				"stringValue": "1.0"
 			}
 		},
 		{
