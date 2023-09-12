@@ -30,28 +30,28 @@
 			"taskId": "7",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-bq-dataset"
+				"connectionName": "mae-bq-dataset-dev"
 			}
 		},
 		{
 			"taskId": "23",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-bq-dataset"
+				"connectionName": "mae-bq-dataset-dev"
 			}
 		},
 		{
 			"taskId": "20",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-bq-dataset"
+				"connectionName": "mae-bq-dataset-dev"
 			}
 		},
 		{
 			"taskId": "13",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-bq-dataset"
+				"connectionName": "mae-bq-dataset-dev"
 			}
 		}
 	],
