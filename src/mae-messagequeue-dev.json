@@ -1,0 +1,793 @@
+{
+	"description": "Veolia Demo 2023",
+	"snapshotNumber": "1",
+	"triggerConfigs": [
+		{
+			"label": "API Trigger",
+			"triggerType": "API",
+			"triggerNumber": "4",
+			"triggerId": "api_trigger/mae-messagequeue_API_4",
+			"startTasks": [
+				{
+					"taskId": "14"
+				}
+			],
+			"properties": {
+				"Trigger name": "mae-messagequeue_API_4"
+			}
+		},
+		{
+			"label": "Schedule Trigger",
+			"triggerType": "CRON",
+			"triggerNumber": "5",
+			"triggerId": "cron_trigger/mae-messagequeue_Timer_1/20+5+*+*+*",
+			"startTasks": [
+				{
+					"taskId": "22"
+				}
+			],
+			"properties": {
+				"Scheduled Time spec": "20 5 * * *",
+				"Timer Name": "mae-messagequeue_Timer_1"
+			}
+		},
+		{
+			"label": "Producer Sends Message",
+			"triggerType": "API",
+			"triggerNumber": "1",
+			"triggerId": "api_trigger/mae-messagequeue_API_1",
+			"startTasks": [
+				{
+					"taskId": "15"
+				}
+			],
+			"properties": {
+				"Trigger name": "mae-messagequeue_API_1"
+			}
+		}
+	],
+	"taskConfigs": [
+		{
+			"task": "SubWorkflowScatterGatherTask",
+			"taskId": "12",
+			"parameters": {
+				"aggregatorMap": {
+					"key": "aggregatorMap",
+					"value": {
+						"stringArray": {}
+					}
+				},
+				"disableEucPropagation": {
+					"key": "disableEucPropagation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"executionStrategy": {
+					"key": "executionStrategy",
+					"value": {
+						"stringValue": "ASYNC"
+					}
+				},
+				"ignoreIndividualFailures": {
+					"key": "ignoreIndividualFailures",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"inputMap": {
+					"key": "inputMap",
+					"value": {
+						"stringArray": {}
+					}
+				},
+				"listToScatter": {
+					"key": "listToScatter",
+					"value": {
+						"stringValue": "$`Task_7_connectorOutputPayload`$"
+					}
+				},
+				"maxParallelScatters": {
+					"key": "maxParallelScatters",
+					"value": {}
+				},
+				"requestParamsMap": {
+					"key": "requestParamsMap",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"input\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"input\"\n      }\n    }\n  }]\n}"
+					}
+				},
+				"responseAggregatorMap": {
+					"key": "responseAggregatorMap",
+					"value": {}
+				},
+				"scatterElementParam": {
+					"key": "scatterElementParam",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"scatterResponseJson": {
+					"key": "scatterResponseJson",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_12_scatterResponseJson`$"
+							]
+						}
+					}
+				},
+				"staggeredScheduleByBatch": {
+					"key": "staggeredScheduleByBatch",
+					"value": {}
+				},
+				"subworkflowInput": {
+					"key": "subworkflowInput",
+					"value": {
+						"stringValue": "consumers"
+					}
+				},
+				"timeInMsToSchedule": {
+					"key": "timeInMsToSchedule",
+					"value": {}
+				},
+				"triggerId": {
+					"key": "triggerId",
+					"value": {
+						"stringValue": "api_trigger/mae-messagequeue_API_4"
+					}
+				},
+				"workflowName": {
+					"key": "workflowName",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "For Each Parallel",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "15",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$input$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$data$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"topicId \\u003d \\u0027$input.message.topicId$\\u0027\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"RESOLVE_TEMPLATE\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_7_filterClause`$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Data Mapping 1",
+			"nextTasks": [
+				{
+					"taskId": "7"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "22",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"baseFunction\": {\n            \"functionType\": {\n              \"baseFunction\": {\n                \"functionName\": \"NOW_IN_MILLIS\"\n              }\n            }\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"intFunction\": {\n              \"functionName\": \"ADD\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"intValue\": \"-172800000\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"intFunction\": {\n              \"functionName\": \"EPOCH_TO_HUMAN_READABLE_TIME\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"yyyy-MM-dd\"\n              }\n            }\n          }, {\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"GMT\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$2daysago$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"publishTime \\u003c \\u0027$2daysago$\\u0027\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"RESOLVE_TEMPLATE\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_23_filterClause`$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Data Mapping 3",
+			"nextTasks": [
+				{
+					"taskId": "23"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "7",
+			"parameters": {
+				"config": {
+					"key": "config",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.GenericConnectorTaskConfig\",\n  \"connection\": {\n    \"connectionName\": \"projects/bap-emea-apigee-5/locations/europe-west1/connections/mae-bq-dataset\",\n    \"serviceName\": \"projects/rda9173c8292491d5-tp/locations/europe-west1/namespaces/connectors/services/runtime\",\n    \"connectorVersion\": \"projects/bap-emea-apigee-5/locations/global/providers/gcp/connectors/bigquery/versions/1\"\n  },\n  \"operation\": \"LIST_ENTITIES\"\n}"
+					}
+				},
+				"connectorOutputPayload": {
+					"key": "connectorOutputPayload",
+					"value": {
+						"stringValue": "$`Task_7_connectorOutputPayload`$"
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "consumers"
+					}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": "$`Task_7_filterClause`$"
+					}
+				},
+				"listEntitiesNextPageToken": {
+					"key": "listEntitiesNextPageToken",
+					"value": {
+						"stringValue": "$`Task_7_listEntitiesNextPageToken`$"
+					}
+				},
+				"listEntitiesPageSize": {
+					"key": "listEntitiesPageSize",
+					"value": {
+						"stringValue": "$`Task_7_listEntitiesPageSize`$"
+					}
+				},
+				"listEntitiesPageToken": {
+					"key": "listEntitiesPageToken",
+					"value": {
+						"stringValue": "$`Task_7_listEntitiesPageToken`$"
+					}
+				},
+				"listEntitiesSortByColumns": {
+					"key": "listEntitiesSortByColumns",
+					"value": {
+						"stringValue": "$`Task_7_listEntitiesSortByColumns`$"
+					}
+				}
+			},
+			"displayName": "Retrieve Consumers",
+			"nextTasks": [
+				{
+					"taskId": "12"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "14",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$input.message.data$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.data$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"baseFunction\": {\n            \"functionType\": {\n              \"baseFunction\": {\n                \"functionName\": \"NOW_IN_MILLIS\"\n              }\n            }\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"intFunction\": {\n              \"functionName\": \"EPOCH_TO_HUMAN_READABLE_TIME\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"yyyy-MM-dd\"\n              }\n            }\n          }, {\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"GMT\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.publishTime$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$consumers$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"consumerId\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.consumerId$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$input.message.topicId$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.topicId$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"$consumers.hostname$/message\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"RESOLVE_TEMPLATE\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$MessageURL$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"$consumers.hostname$/notification\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"RESOLVE_TEMPLATE\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$NotificationURL$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"BOOLEAN_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"booleanValue\": false\n          }\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.error$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"baseFunction\": {\n            \"functionType\": {\n              \"baseFunction\": {\n                \"functionName\": \"GET_UUID\"\n              }\n            }\n          }\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$input.message.messageId$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$input.message.messageId$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_13_connectorInputPayload`.messageId$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Data Mapping",
+			"nextTasks": [
+				{
+					"taskId": "13"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "20",
+			"parameters": {
+				"config": {
+					"key": "config",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.GenericConnectorTaskConfig\",\n  \"connection\": {\n    \"connectionName\": \"projects/bap-emea-apigee-5/locations/europe-west1/connections/mae-bq-dataset\",\n    \"serviceName\": \"projects/rda9173c8292491d5-tp/locations/europe-west1/namespaces/connectors/services/runtime\",\n    \"connectorVersion\": \"projects/bap-emea-apigee-5/locations/global/providers/gcp/connectors/bigquery/versions/1\"\n  },\n  \"operation\": \"DELETE_ENTITY\"\n}"
+					}
+				},
+				"entityId": {
+					"key": "entityId",
+					"value": {
+						"stringValue": "$`Task_20_entityId`$"
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "messages"
+					}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": "$`Task_20_filterClause`$"
+					}
+				}
+			},
+			"displayName": "Delete Message",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "23",
+			"parameters": {
+				"config": {
+					"key": "config",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.GenericConnectorTaskConfig\",\n  \"connection\": {\n    \"connectionName\": \"projects/bap-emea-apigee-5/locations/europe-west1/connections/mae-bq-dataset\",\n    \"serviceName\": \"projects/rda9173c8292491d5-tp/locations/europe-west1/namespaces/connectors/services/runtime\",\n    \"connectorVersion\": \"projects/bap-emea-apigee-5/locations/global/providers/gcp/connectors/bigquery/versions/1\"\n  },\n  \"operation\": \"DELETE_ENTITY\"\n}"
+					}
+				},
+				"entityId": {
+					"key": "entityId",
+					"value": {
+						"stringValue": "$`Task_23_entityId`$"
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "messages"
+					}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": "$`Task_23_filterClause`$"
+					}
+				}
+			},
+			"displayName": "Delete all messages older than 2 days",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "13",
+			"parameters": {
+				"config": {
+					"key": "config",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.GenericConnectorTaskConfig\",\n  \"connection\": {\n    \"connectionName\": \"projects/bap-emea-apigee-5/locations/europe-west1/connections/mae-bq-dataset\",\n    \"serviceName\": \"projects/rda9173c8292491d5-tp/locations/europe-west1/namespaces/connectors/services/runtime\",\n    \"connectorVersion\": \"projects/bap-emea-apigee-5/locations/global/providers/gcp/connectors/bigquery/versions/1\"\n  },\n  \"operation\": \"CREATE_ENTITY\"\n}"
+					}
+				},
+				"connectorInputPayload": {
+					"key": "connectorInputPayload",
+					"value": {
+						"stringValue": "$`Task_13_connectorInputPayload`$"
+					}
+				},
+				"connectorOutputPayload": {
+					"key": "connectorOutputPayload",
+					"value": {
+						"stringValue": "$`Task_13_connectorOutputPayload`$"
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "messages"
+					}
+				}
+			},
+			"displayName": "Persist Message",
+			"nextTasks": [
+				{
+					"taskId": "17",
+					"condition": "$input.type$ = \"pull\"",
+					"displayName": "PULL"
+				},
+				{
+					"taskId": "16",
+					"condition": "$input.type$ = \"push\"",
+					"displayName": "PUSH"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "21",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"consumerId \\u003d \\u0027$consumers.consumerId$\\u0027 AND messageId \\u003d \\u0027$input.message.messageId$\\u0027\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"RESOLVE_TEMPLATE\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_20_filterClause`$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Data Mapping 2",
+			"nextTasks": [
+				{
+					"taskId": "20"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+		},
+		{
+			"task": "GenericRestV2Task",
+			"taskId": "17",
+			"parameters": {
+				"additionalHeaders": {
+					"key": "additionalHeaders",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"x-apikey\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$consumers.apiKey$\"\n    }\n  }]\n}"
+					}
+				},
+				"disableSSLValidation": {
+					"key": "disableSSLValidation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"followRedirects": {
+					"key": "followRedirects",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"httpMethod": {
+					"key": "httpMethod",
+					"value": {
+						"stringValue": "POST"
+					}
+				},
+				"httpParams": {
+					"key": "httpParams",
+					"value": {}
+				},
+				"requestBody": {
+					"key": "requestBody",
+					"value": {
+						"stringValue": "$input.message.messageId$"
+					}
+				},
+				"requestorId": {
+					"key": "requestorId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"responseBody": {
+					"key": "responseBody",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_17_responseBody`$"
+							]
+						}
+					}
+				},
+				"responseHeader": {
+					"key": "responseHeader",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_17_responseHeader`$"
+							]
+						}
+					}
+				},
+				"responseStatus": {
+					"key": "responseStatus",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_17_responseStatus`$"
+							]
+						}
+					}
+				},
+				"throwError": {
+					"key": "throwError",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"url": {
+					"key": "url",
+					"value": {
+						"stringValue": "$NotificationURL$"
+					}
+				},
+				"urlFetchingService": {
+					"key": "urlFetchingService",
+					"value": {
+						"stringValue": "HARPOON"
+					}
+				},
+				"urlQueryStrings": {
+					"key": "urlQueryStrings",
+					"value": {}
+				},
+				"useSSL": {
+					"key": "useSSL",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"userAgent": {
+					"key": "userAgent",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "Send Notification",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"synchronousCallFailurePolicy": {
+				"retryStrategy": "FIXED_INTERVAL",
+				"maxRetries": 2,
+				"intervalTime": "1970-01-01T00:00:30Z"
+			},
+			"errorCatcherId": "ErrorCatcher_2"
+		},
+		{
+			"task": "GenericRestV2Task",
+			"taskId": "16",
+			"parameters": {
+				"additionalHeaders": {
+					"key": "additionalHeaders",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"x-apikey\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$consumers.apiKey$\"\n    }\n  }]\n}"
+					}
+				},
+				"disableSSLValidation": {
+					"key": "disableSSLValidation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"followRedirects": {
+					"key": "followRedirects",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"httpMethod": {
+					"key": "httpMethod",
+					"value": {
+						"stringValue": "POST"
+					}
+				},
+				"httpParams": {
+					"key": "httpParams",
+					"value": {}
+				},
+				"requestBody": {
+					"key": "requestBody",
+					"value": {
+						"stringValue": "$input.message$"
+					}
+				},
+				"requestorId": {
+					"key": "requestorId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"responseBody": {
+					"key": "responseBody",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_16_responseBody`$"
+							]
+						}
+					}
+				},
+				"responseHeader": {
+					"key": "responseHeader",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_16_responseHeader`$"
+							]
+						}
+					}
+				},
+				"responseStatus": {
+					"key": "responseStatus",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_16_responseStatus`$"
+							]
+						}
+					}
+				},
+				"throwError": {
+					"key": "throwError",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"url": {
+					"key": "url",
+					"value": {
+						"stringValue": "$MessageURL$"
+					}
+				},
+				"urlFetchingService": {
+					"key": "urlFetchingService",
+					"value": {
+						"stringValue": "HARPOON"
+					}
+				},
+				"urlQueryStrings": {
+					"key": "urlQueryStrings",
+					"value": {}
+				},
+				"useSSL": {
+					"key": "useSSL",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"userAgent": {
+					"key": "userAgent",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "Send Data",
+			"nextTasks": [
+				{
+					"taskId": "21",
+					"condition": "$`Task_16_responseStatus`$ = \"200 OK\"",
+					"displayName": "HTTP 200 OK"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"failurePolicy": {
+				"retryStrategy": "FIXED_INTERVAL",
+				"maxRetries": 2,
+				"intervalTime": "1970-01-01T00:00:20Z"
+			},
+			"synchronousCallFailurePolicy": {
+				"retryStrategy": "NONE",
+				"maxRetries": 2,
+				"intervalTime": "1970-01-01T00:00:20Z"
+			}
+		}
+	],
+	"integrationParameters": [
+		{
+			"key": "`Task_12_scatterResponseJson`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"producer": "1_12"
+		},
+		{
+			"key": "`Task_16_responseHeader`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_16"
+		},
+		{
+			"key": "`Task_16_responseBody`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_16"
+		},
+		{
+			"key": "`Task_16_responseStatus`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_16"
+		},
+		{
+			"key": "`Task_17_responseHeader`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_17"
+		},
+		{
+			"key": "`Task_17_responseBody`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_17"
+		},
+		{
+			"key": "`Task_17_responseStatus`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_17"
+		},
+		{
+			"key": "`Task_20_entityId`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_20"
+		},
+		{
+			"key": "`Task_20_filterClause`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_20"
+		},
+		{
+			"key": "`Task_23_entityId`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_23"
+		},
+		{
+			"key": "`Task_23_filterClause`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_23"
+		},
+		{
+			"key": "2daysago",
+			"dataType": "STRING_VALUE"
+		},
+		{
+			"key": "MessageURL",
+			"dataType": "STRING_VALUE"
+		},
+		{
+			"key": "NotificationURL",
+			"dataType": "STRING_VALUE"
+		},
+		{
+			"key": "`Task_13_connectorOutputPayload`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"producer": "1_13"
+		},
+		{
+			"key": "`Task_13_connectorInputPayload`",
+			"dataType": "JSON_VALUE",
+			"inputOutputType": "OUT",
+			"producer": "1_13",
+			"jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"messageId\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"publishTime\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"attributes\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"consumerId\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"topicId\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"error\": {\n      \"type\": [\"boolean\", \"null\"],\n      \"readOnly\": false\n    }\n  }\n}"
+		},
+		{
+			"key": "input",
+			"dataType": "JSON_VALUE",
+			"defaultValue": {
+				"jsonValue": "{\n  \"type\": \"push\",\n  \"message\": {\n    \"data\": \"test\",\n    \"messageId\": \"test\",\n    \"topicId\": \"test\"\n  }\n}"
+			},
+			"inputOutputType": "IN_OUT",
+			"jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"topicId\": {\n          \"type\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"string\"\n        },\n        \"messageId\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}"
+		},
+		{
+			"key": "`Task_7_listEntitiesPageSize`",
+			"dataType": "INT_VALUE",
+			"producer": "1_7"
+		},
+		{
+			"key": "`Task_7_listEntitiesPageToken`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_7"
+		},
+		{
+			"key": "`Task_7_listEntitiesSortByColumns`",
+			"dataType": "STRING_ARRAY",
+			"producer": "1_7"
+		},
+		{
+			"key": "`Task_7_filterClause`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_7"
+		},
+		{
+			"key": "`Task_7_connectorOutputPayload`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"producer": "1_7",
+			"jsonSchema": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"hostname\": {\n        \"type\": [\"string\", \"null\"],\n        \"readOnly\": false\n      },\n      \"consumerId\": {\n        \"type\": [\"string\", \"null\"],\n        \"readOnly\": false\n      },\n      \"adminEmail\": {\n        \"type\": [\"string\", \"null\"],\n        \"readOnly\": false\n      },\n      \"topicId\": {\n        \"type\": [\"string\", \"null\"],\n        \"readOnly\": false\n      },\n      \"apiKey\": {\n        \"type\": [\"string\", \"null\"],\n        \"readOnly\": false\n      }\n    }\n  }\n}"
+		},
+		{
+			"key": "`Task_7_listEntitiesNextPageToken`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_7"
+		},
+		{
+			"key": "consumers",
+			"dataType": "JSON_VALUE",
+			"jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"hostname\": {\n      \"type\": \"string\"\n    },\n    \"topicId\": {\n      \"type\": \"string\"\n    },\n    \"apiKey\": {\n      \"type\": \"string\"\n    },\n    \"consumerId\": {\n      \"type\": \"string\"\n    },\n    \"adminEmail\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+		},
+		{
+			"key": "_version",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": "1"
+			}
+		},
+		{
+			"key": "_env",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": "dev"
+			}
+		}
+	]
+}
