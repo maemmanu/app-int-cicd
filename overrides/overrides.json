@@ -30,7 +30,7 @@
 			"taskId": "7",
 			"task": "GenericConnectorTask",
 			"parameters": {
-				"connectionName": "mae-bq-dataset-dev"
+				"connectionName": "mae-bq-dataset"
 			}
 		},
 		{
