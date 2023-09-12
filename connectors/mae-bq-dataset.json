@@ -11,7 +11,7 @@
 		},
 		{
 			"key": "dataset_id",
-			"stringValue": "me_dataset_dev"
+			"stringValue": "me_dataset"
 		},
 		{
 			"key": "proxy_enabled"
